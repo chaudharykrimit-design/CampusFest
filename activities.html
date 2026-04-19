@@ -32,6 +32,13 @@
         <h1>Event Activities</h1>
         <p style="margin-bottom: 30px; color: var(--text-dim);">Browse and register for your favorite events below.</p>
 
+        <div class="admin-nav" style="margin-bottom: 40px;">
+            <button class="admin-nav-btn active" onclick="loadActivities('All')">All Events</button>
+            <button class="admin-nav-btn" onclick="loadActivities('Sports')">Sports</button>
+            <button class="admin-nav-btn" onclick="loadActivities('Cultural')">Cultural</button>
+            <button class="admin-nav-btn" onclick="loadActivities('Technical')">Technical</button>
+        </div>
+
         <div class="card-container" id="activitiesContainer">
             <!-- Activities will be loaded via JS from MongoDB -->
             <p>Loading activities...</p>

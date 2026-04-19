@@ -10,7 +10,41 @@ async function apiFetch(endpoint, method = 'GET', body = null) {
     return await response.json();
 }
 
-// Authentication Logic
+function toggleAuth() {
+    const card = document.querySelector('.login-card');
+    const isLogin = card.querySelector('h1').innerText === 'Welcome Back';
+    
+    if (isLogin) {
+        card.querySelector('h1').innerText = 'Create Account';
+        card.querySelector('p').innerText = 'Join ASPIRE 2026 Today';
+        card.querySelector('.form-group').insertAdjacentHTML('afterbegin', '<input id="regUserName" type="text" placeholder="Full Name">');
+        card.querySelector('button').innerHTML = 'Sign Up <i class="fas fa-user-plus" style="margin-left: 8px;"></i>';
+        card.querySelector('button').onclick = signup;
+        card.querySelector('p:last-of-type').innerHTML = 'Already have an account? <a href="#" onclick="toggleAuth()" style="color: var(--primary); text-decoration: none;">Login</a>';
+    } else {
+        card.querySelector('h1').innerText = 'Welcome Back';
+        card.querySelector('p').innerText = 'Login to access your festival dashboard';
+        card.querySelector('#regUserName').remove();
+        card.querySelector('button').innerHTML = 'Sign In <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
+        card.querySelector('button').onclick = login;
+        card.querySelector('p:last-of-type').innerHTML = 'Don\'t have an account? <a href="#" onclick="toggleAuth()" style="color: var(--primary); text-decoration: none;">Sign Up</a>';
+    }
+}
+
+async function signup() {
+    const name = document.getElementById('regUserName').value;
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const data = await apiFetch('signup', 'POST', { name, email, password });
+    if (data.error) {
+        alert(data.error);
+    } else {
+        alert("Account Created! You can now login.");
+        toggleAuth();
+    }
+}
+
 async function login() {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
@@ -18,7 +52,7 @@ async function login() {
     try {
         const data = await apiFetch('login', 'POST', { email, password });
         if (data.error) {
-            alert(data.error); // This will now show the real error from the server
+            alert(data.error);
         } else {
             localStorage.setItem('user', JSON.stringify(data.user));
             window.location.href = data.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
@@ -91,26 +125,37 @@ async function loadDashboard() {
     container.innerHTML = html;
 }
 
-async function loadActivities() {
+async function loadActivities(filter = 'All') {
+    // Update active button
+    document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText === filter || (filter === 'All' && btn.innerText === 'All Events')) {
+            btn.classList.add('active');
+        }
+    });
+
     const data = await apiFetch('activities');
     const container = document.getElementById('activitiesContainer');
     if (!container) return;
     
-    container.innerHTML = data.map(act => `
-        <div class="card">
+    const filteredData = filter === 'All' ? data : data.filter(act => act.type === filter);
+
+    container.innerHTML = filteredData.map(act => `
+        <div class="card animate">
             <div class="image-wrapper">
-                <img src="https://images.unsplash.com/featured/?${encodeURIComponent(act.title.split(' ')[0])},event" alt="${act.title}">
+                <img src="https://source.unsplash.com/featured/?${encodeURIComponent(act.title.split(' ')[0])},${act.type}" alt="${act.title}">
+                <div style="position: absolute; top: 15px; right: 15px; background: var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">${act.type}</div>
             </div>
             <div class="card-body">
-                <h3>${act.title}</h3>
-                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 5px;">Date: ${act.date}</p>
-                <p style="font-size: 0.85rem; margin-bottom: 15px;">${act.description}</p>
-                <button onclick="registerEvent('${act.title}')">
-                    Register Now <i class="fas fa-paper-plane" style="margin-left: 5px;"></i>
+                <h3 style="margin-bottom: 10px;">${act.title}</h3>
+                <p style="font-size: 0.85rem; color: var(--accent); font-weight: 600; margin-bottom: 8px;"><i class="fas fa-calendar-alt"></i> ${act.date}</p>
+                <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5;">${act.description}</p>
+                <button onclick="registerEvent('${act.title}')" style="width: 100%;">
+                    Join Event <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                 </button>
             </div>
         </div>
-    `).join('') || '<p>No activities scheduled.</p>';
+    `).join('') || '<p>No activities found in this category.</p>';
 }
 
 async function loadScoreboard() {
