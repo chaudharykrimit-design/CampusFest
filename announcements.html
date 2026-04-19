@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusFest | Announcements</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-bolt"></i>
+            <span>CampusFest</span>
+        </div>
+        
+        <nav>
+            <a href="dashboard.html"><i class="fas fa-home"></i> <span>Overview</span></a>
+            <a href="activities.html"><i class="fas fa-calendar-alt"></i> <span>Activities</span></a>
+            <a href="schedule.html"><i class="fas fa-clock"></i> <span>Schedule</span></a>
+            <a href="announcements.html" class="active"><i class="fas fa-bullhorn"></i> <span>Announcements</span></a>
+            <a href="scoreboard.html"><i class="fas fa-trophy"></i> <span>Scoreboard</span></a>
+            <a href="#" onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        </nav>
+    </div>
+
+    <div class="main animate">
+        <h1>Latest Announcements</h1>
+        <p style="margin-bottom: 30px; color: var(--text-dim);">Stay updated with the latest news and changes.</p>
+
+        <div id="announcementsContainer">
+            <!-- Announcements will be loaded via JS from MongoDB -->
+            <p>Loading announcements...</p>
+        </div>
+    </div>
+
+</body>
+</html>

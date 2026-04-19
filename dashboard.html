@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusFest | Dashboard</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-bolt"></i>
+            <span>CampusFest</span>
+        </div>
+        
+        <nav>
+            <a href="dashboard.html" class="active"><i class="fas fa-home"></i> <span>Overview</span></a>
+            <a href="activities.html"><i class="fas fa-calendar-alt"></i> <span>Activities</span></a>
+            <a href="schedule.html"><i class="fas fa-clock"></i> <span>Schedule</span></a>
+            <a href="announcements.html"><i class="fas fa-bullhorn"></i> <span>Announcements</span></a>
+            <a href="scoreboard.html"><i class="fas fa-trophy"></i> <span>Scoreboard</span></a>
+            <a href="#" onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        </nav>
+    </div>
+
+    <div class="main animate">
+        
+        <div class="hero">
+            <h1>Welcome to ASPIRE 2026</h1>
+            <p>
+                Experience the ultimate inter-house festival. Compete in sports, 
+                cultural, and technical events to earn glory for your house and 
+                lift the championship trophy!
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-flag"></i>
+                <h2>23+</h2>
+                <p>Total Events</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h2>5</h2>
+                <p>Houses</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <h2>3 Days</h2>
+                <p>Festival Duration</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user-graduate"></i>
+                <h2>500+</h2>
+                <p>Participants</p>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-shield-alt" style="color: var(--primary);"></i> Participating Houses</h2>
+        <div class="house-grid">
+            <div class="house-card">
+                <span class="house-icon">🔥</span>
+                <h3>Agni</h3>
+                <p>House of energy and determination</p>
+            </div>
+            <div class="house-card">
+                <span class="house-icon">🌪</span>
+                <h3>Vayu</h3>
+                <p>House of speed and strategy</p>
+            </div>
+            <div class="house-card">
+                <span class="house-icon">💧</span>
+                <h3>Jal</h3>
+                <p>House of adaptability and flow</p>
+            </div>
+            <div class="house-card">
+                <span class="house-icon">🌍</span>
+                <h3>Prithvi</h3>
+                <p>House of strength and stability</p>
+            </div>
+            <div class="house-card">
+                <span class="house-icon">🚀</span>
+                <h3>Antriksh</h3>
+                <p>House of innovation and ambition</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;" id="highlightsSection">
+            <h2 class="section-title"><i class="fas fa-star" style="color: #fbbf24;"></i> Upcoming Highlights</h2>
+            <!-- Highlights will be loaded via JS from MongoDB -->
+            <div class="announcement">
+                <div class="announcement-icon"><i class="fas fa-info-circle"></i></div>
+                <div>Loading highlights...</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
