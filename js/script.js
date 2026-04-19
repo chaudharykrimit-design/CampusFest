@@ -18,13 +18,13 @@ async function login() {
     try {
         const data = await apiFetch('login', 'POST', { email, password });
         if (data.error) {
-            alert(data.error);
+            alert(data.error); // This will now show the real error from the server
         } else {
             localStorage.setItem('user', JSON.stringify(data.user));
             window.location.href = data.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
         }
     } catch (err) {
-        alert("Login failed. Check your connection.");
+        alert("Network Error: Could not connect to the server.");
     }
 }
 
